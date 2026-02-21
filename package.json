@@ -1,0 +1,28 @@
+{
+  "name": "automation_anti",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:ui": "cross-env HEADLESS=false cucumber-js",
+    "test:slow": "cross-env HEADLESS=false SLOW_MO=1000 cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.0",
+    "@types/pg": "^8.16.0",
+    "dotenv": "^17.3.1",
+    "pg": "^8.18.0",
+    "playwright": "^1.58.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
