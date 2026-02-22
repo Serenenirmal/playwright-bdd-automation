@@ -1,10 +1,8 @@
-import { chromium, firefox, webkit, Browser, BrowserContext, Page } from '@playwright/test';
+import { chromium, firefox, webkit, Browser, Page } from '@playwright/test';
 import { config } from '../config/env';
 
 export class BrowserFactory {
     static browser: Browser;
-    static context: BrowserContext;
-    static page: Page;
 
     static async initBrowser() {
         const headless = config.headless;
@@ -31,17 +29,18 @@ export class BrowserFactory {
         if (!this.browser) {
             await this.initBrowser();
         }
-        this.context = await this.browser.newContext();
-        this.page = await this.context.newPage();
-        return this.page;
+        const context = await this.browser.newContext();
+        const page = await context.newPage();
+        return page;
     }
 
-    static async closePage() {
-        if (this.page) {
-            await this.page.close();
-        }
-        if (this.context) {
-            await this.context.close();
+    static async closePage(page: Page) {
+        if (page) {
+            await page.close();
+            const context = page.context();
+            if (context) {
+                await context.close();
+            }
         }
     }
 
