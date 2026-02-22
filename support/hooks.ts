@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs';
 import { BeforeAll, AfterAll, Before, After, setDefaultTimeout, Status } from '@cucumber/cucumber';
 import { BrowserFactory } from './browserFactory';
 import { config } from '../config/env';
@@ -6,6 +7,8 @@ import { config } from '../config/env';
 setDefaultTimeout(30000);
 
 BeforeAll(async function () {
+    // Create reports directories
+    await fs.mkdir('reports/screenshots', { recursive: true });
     await BrowserFactory.initBrowser();
 });
 
@@ -20,7 +23,7 @@ After(async function (scenario) {
             this.attach(screenshot, 'image/png');
         }
     }
-    await BrowserFactory.closePage();
+    await BrowserFactory.closePage(this.page);
 });
 
 AfterAll(async function () {
